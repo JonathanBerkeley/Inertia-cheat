@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="0. Libs">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="1. Headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="2. Preamble">
+      <UniqueIdentifier>{f1956edc-2041-4308-a5e2-636556ee0aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3. Frame">
+      <UniqueIdentifier>{1204e65c-d2a5-4717-9a11-eff98d4d8021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Mods">
+      <UniqueIdentifier>{1798b769-d2f3-401d-ab44-c1bb0a956997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3. Frame\Data">
+      <UniqueIdentifier>{1abb6205-6342-4be9-b50c-cd09ed613c94}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>2. Preamble</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>2. Preamble</Filter>
+    </ClCompile>
+    <ClCompile Include="flashpoint.cpp">
+      <Filter>3. Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="data.cpp">
+      <Filter>3. Frame\Data</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="constants.hpp">
+      <Filter>1. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.hpp">
+      <Filter>1. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.hpp">
+      <Filter>1. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="flashpoint.hpp">
+      <Filter>3. Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="data.hpp">
+      <Filter>3. Frame\Data</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
