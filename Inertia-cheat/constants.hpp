@@ -3,6 +3,6 @@
 
 namespace constants {
     const LPCWSTR DLL_NAME { L"Inertia-cheat" };
-    const std::string VERSION { "0.0.2" };
+    const std::string VERSION { "0.0.5" };
     const std::wstring HIJACK_TEXT { L"Inertia - Cheat enabled!" };
 }

@@ -39,6 +39,9 @@
     <ClCompile Include="data.cpp">
       <Filter>3. Frame\Data</Filter>
     </ClCompile>
+    <ClCompile Include="memory.cpp">
+      <Filter>3. Frame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="constants.hpp">
@@ -56,5 +59,13 @@
     <ClInclude Include="data.hpp">
       <Filter>3. Frame\Data</Filter>
     </ClInclude>
+    <ClInclude Include="memory.hpp">
+      <Filter>3. Frame</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

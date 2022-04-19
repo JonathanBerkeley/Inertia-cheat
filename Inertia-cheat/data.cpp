@@ -9,7 +9,4 @@ namespace data {
         // Windows
         HMODULE self_module = nullptr;
     }
-
-    namespace offset {
-    }
 }

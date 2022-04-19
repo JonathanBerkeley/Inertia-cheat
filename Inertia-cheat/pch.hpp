@@ -11,5 +11,10 @@
 #include "framework.hpp" // Windows
 #include <iostream>
 #include <string>
+#include <vector>
+#include <cstdint>
+#include <optional>
+#include <limits>
+
 
 #endif //PCH_H

@@ -19,7 +19,4 @@ namespace data {
         constexpr int8_t HK_E = 0x45;
         constexpr int8_t HK_R = 0x52;
     }
-
-    namespace offset {
-    }
 }
