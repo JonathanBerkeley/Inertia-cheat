@@ -8,14 +8,21 @@
 using namespace data;
 
 
+/**
+ * \brief Entry point for the cheat logic
+ * \param lpParam Dummy parameter
+ */
 DWORD WINAPI Init(LPVOID lpParam) {
     LogicLoop();
 
-    // ReSharper disable once CppZeroConstantCanBeReplacedWithNullptr
-    return 0;
+    return DWORD{};
 }
 
 
+/**
+ * \brief Enumerate a processes windows and set them to supplied string
+ * \param lpString String to set names to
+ */
 void RenameWindows(LPCWSTR lpString) {
     HWND window = nullptr;
     const auto pid = GetCurrentProcessId();
@@ -35,28 +42,35 @@ void RenameWindows(LPCWSTR lpString) {
 }
 
 
+/**
+ * \brief Uninject this module from the game
+ */
 [[noreturn]]
 void Uninject() {
     RenameWindows(L"Inertia");
-    // Uninject
+    
     FreeLibraryAndExitThread(proc::self_module, 0x0);
 }
 
 
 #pragma region Player
 struct Player {
-    std::int32_t* health;
-    std::int32_t* ammo;
+    std::int32_t* health{};
+    std::int32_t* ammo{};
 };
 
 
-Player GetPlayer() {
+/**
+ * \brief Try to get main Player object
+ * \return Populated Player object on success, std::nullopt on failure
+ */
+std::optional<Player> GetPlayer() {
     auto start_point = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("UnityPlayer.dll"));
     start_point += 0x13A1340;
     const auto health_ptr = TraverseChain(start_point, { 0xC2C, 0xDC8, 0xEA8, 0x18, 0x38 }).value_or(0u);
 
     if (!health_ptr)
-        Uninject();
+        return std::nullopt;
 
     const auto ammo_ptr = health_ptr - 0x4;
 
@@ -76,17 +90,23 @@ void LogicLoop() {
         constants::HIJACK_TEXT.c_str()
     );
 
-    const auto [health, ammo] = GetPlayer();
-    
-
     // Main Logic Loop
     while (running) {
-        if (GetAsyncKeyState(input::HK_UNLOAD) & 1) {
+
+        if (GetAsyncKeyState(input::HK_UNLOAD) & 1)
             Uninject();
+
+        const auto [health, ammo]{ GetPlayer().value_or(Player{}) };
+
+        if (!health || !ammo) {
+            Sleep(3);
+            continue;
         }
-        
-        *health = std::numeric_limits<std::int32_t>::max();
-        *ammo = std::numeric_limits<std::int32_t>::max();
+
+        if (PointerIsValid(health)) {
+            *health = 100;
+            *ammo = 100;
+        }
 
         Sleep(3);
     }
