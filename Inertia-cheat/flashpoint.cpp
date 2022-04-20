@@ -1,11 +1,11 @@
-// ReSharper disable CppClangTidyPerformanceNoIntToPtr
 #include "pch.hpp"
 #include "flashpoint.hpp"
 #include "constants.hpp"
 #include "data.hpp"
 #include "memory.hpp"
+#include "player.hpp"
 
-using namespace data;
+using namespace data; // Data is a namespace wrapper
 
 
 /**
@@ -15,6 +15,7 @@ using namespace data;
 DWORD WINAPI Init(LPVOID lpParam) {
     LogicLoop();
 
+    // ReSharper disable once CppUnreachableCode
     return DWORD{};
 }
 
@@ -53,61 +54,70 @@ void Uninject() {
 }
 
 
-#pragma region Player
-struct Player {
-    std::int32_t* health{};
-    std::int32_t* ammo{};
-};
+/**
+ * \brief Check cheat hotkeys
+ * \param cheat_enabled Cheat_enabled status to be toggled if hotkey pressed
+ */
+void CheckHotkeys(bool& cheat_enabled) {
+
+    if (GetAsyncKeyState(input::HK_UNLOAD) & 1)
+        Uninject();
+
+    if (GetAsyncKeyState(input::HK_E) & 1) {
+        cheat_enabled = !cheat_enabled;
+
+        // Set title to reflect cheat status
+        const auto new_title = std::wstring{
+            constants::HIJACK_TEXT + (cheat_enabled ? L" [ON]" : L" [OFF]")
+        };
+
+        RenameWindows(new_title.c_str());
+    }
+}
 
 
 /**
- * \brief Try to get main Player object
- * \return Populated Player object on success, std::nullopt on failure
+ * \brief Set player's health and ammo to 100
+ * \return True on success, false on failure
  */
-std::optional<Player> GetPlayer() {
-    auto start_point = reinterpret_cast<std::uintptr_t>(GetModuleHandleA("UnityPlayer.dll"));
-    start_point += 0x13A1340;
-    const auto health_ptr = TraverseChain(start_point, { 0xC2C, 0xDC8, 0xEA8, 0x18, 0x38 }).value_or(0u);
+bool StatsHack() {
+    const auto [health, ammo] { GetPlayer().value_or(Player{}) };
 
-    if (!health_ptr)
-        return std::nullopt;
+    if (!health || !ammo)
+        return false;
 
-    const auto ammo_ptr = health_ptr - 0x4;
+    if (PointerIsValid(health)) {
+        *health = 100;
+        *ammo = 100;
+        return true;
+    }
 
-    const Player player{
-        .health = reinterpret_cast<std::int32_t*>(health_ptr),
-        .ammo = reinterpret_cast<std::int32_t*>(ammo_ptr)
-    };
-
-    return player;
+    return false;
 }
-#pragma endregion
 
 
+[[noreturn]]
 void LogicLoop() {
     // Rename window to indicate cheat enabled
     RenameWindows(
         constants::HIJACK_TEXT.c_str()
     );
 
+    bool cheat_enabled = true;
+
     // Main Logic Loop
-    while (running) {
+    for (;;) {
 
-        if (GetAsyncKeyState(input::HK_UNLOAD) & 1)
-            Uninject();
+        CheckHotkeys(cheat_enabled);
 
-        const auto [health, ammo]{ GetPlayer().value_or(Player{}) };
-
-        if (!health || !ammo) {
-            Sleep(3);
-            continue;
+        if (cheat_enabled) {
+            // Sleep on failure to do hack functionality
+            if (!StatsHack()) {
+                Sleep(2);
+                continue;
+            }
         }
 
-        if (PointerIsValid(health)) {
-            *health = 100;
-            *ammo = 100;
-        }
-
-        Sleep(3);
+        Sleep(2);
     }
 }

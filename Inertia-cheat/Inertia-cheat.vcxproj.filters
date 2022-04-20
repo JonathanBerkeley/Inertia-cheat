@@ -19,11 +19,11 @@
     <Filter Include="3. Frame">
       <UniqueIdentifier>{1204e65c-d2a5-4717-9a11-eff98d4d8021}</UniqueIdentifier>
     </Filter>
-    <Filter Include="4. Mods">
-      <UniqueIdentifier>{1798b769-d2f3-401d-ab44-c1bb0a956997}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3. Frame\Data">
       <UniqueIdentifier>{1abb6205-6342-4be9-b50c-cd09ed613c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="4. Application">
+      <UniqueIdentifier>{c8b08fda-f685-4258-8712-5bb64259f7f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="memory.cpp">
       <Filter>3. Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>4. Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="memory.hpp">
       <Filter>3. Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="player.hpp">
+      <Filter>4. Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
