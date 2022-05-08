@@ -96,6 +96,11 @@ bool StatsHack() {
 }
 
 
+/**
+ * \brief Main program loop of the module
+ *
+ * Does not return
+ */
 [[noreturn]]
 void LogicLoop() {
     // Rename window to indicate cheat enabled
