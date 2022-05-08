@@ -16,6 +16,9 @@
 !credits.md
 !CREDITS.txt
 
+# Media
+!*.cd
+
 # Visual studio files
 !*.sln
 !*.vcxproj
